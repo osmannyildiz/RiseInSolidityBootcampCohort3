@@ -16,8 +16,8 @@ contract ProposalContract {
     mapping(uint256 => Proposal) proposals;
     uint256 private proposal_counter;
 
-    function createProposal(string calldata _description, uint256 _total_vote_count_to_end) external {
+    function createProposal(string calldata _title, string calldata _description, uint256 _total_vote_count_to_end) external {
         proposal_counter += 1;
-        proposals[proposal_counter] = Proposal("", _description, 0, 0, 0, _total_vote_count_to_end, false, true);
+        proposals[proposal_counter] = Proposal(_title, _description, 0, 0, 0, _total_vote_count_to_end, false, true);
     }
 }
