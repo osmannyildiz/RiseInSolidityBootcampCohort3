@@ -9,9 +9,15 @@ contract ProposalContract {
         uint256 reject_count;
         uint256 pass_count;
         uint256 total_vote_count_to_end;
-        bool current_state;
+        bool current_state; // whether it passes of fails
         bool is_active;
     }
 
     mapping(uint256 => Proposal) proposals;
+    uint256 private proposal_counter;
+
+    function createProposal(string calldata _description, uint256 _total_vote_count_to_end) external {
+        proposal_counter += 1;
+        proposals[proposal_counter] = Proposal("", _description, 0, 0, 0, _total_vote_count_to_end, false, true);
+    }
 }
