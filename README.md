@@ -7,3 +7,7 @@ Changes relevant for this homework are made in this commit: [17a844d](https://gi
 ## Second Homework
 
 Changes relevant for this homework are made in this commit: [a551cd0](https://github.com/osmannyildiz/RiseInSolidityBootcampCohort3/commit/a551cd076adea939f0d21dccc05c5b40978c7374)
+
+## Third Homework
+
+Changes relevant for this homework are made in this commit: [9510e05](https://github.com/osmannyildiz/RiseInSolidityBootcampCohort3/commit/9510e05d943573c807448e2e1e47928c839d1e7e)
