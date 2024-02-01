@@ -3,6 +3,7 @@ pragma solidity ^0.8.18;
 
 contract ProposalContract {
     struct Proposal {
+        string title;
         string description;
         uint256 approve_count;
         uint256 reject_count;
