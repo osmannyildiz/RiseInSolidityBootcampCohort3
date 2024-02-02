@@ -76,10 +76,10 @@ contract ProposalContract {
     }
 
     /*
-      - For a proposal to succeed, the number of approve votes should be higher than the sum of reject and half the pass votes
-        (you can think like pass votes have half the impact).
-      - You may have an odd number of pass votes which cannot be divided by two. In these cases, you add 1 to the number of
-        pass votes and then divide.
+    For a proposal to succeed:
+      - The number of approve votes must be greater than the reject votes.
+      - The number of pass votes must be less than half of the approve votes. (If the number of approve votes is odd, then
+        we will add 1 and then continue with division.)
     */
     function calculateProposalCurrentState() private view returns (bool) {
         Proposal storage proposal = proposals[proposal_counter];
@@ -87,17 +87,18 @@ contract ProposalContract {
         uint256 approve = proposal.approve_count;
         uint256 reject = proposal.reject_count;
         uint256 pass = proposal.pass_count;
-            
-        if (pass % 2 == 1) {
-            pass += 1;
-        }
 
-        pass = pass / 2;
-
-        if (approve > reject + pass) {
-            return true; // passed
-        } else {
+        if (!(approve > reject)) {
             return false; // failed
         }
+
+        if (approve % 2 == 1) {
+            approve += 1;
+        }
+        if (!(pass < approve / 2)) {
+            return false; // failed
+        }
+
+        return true; // passed
     }
 }
