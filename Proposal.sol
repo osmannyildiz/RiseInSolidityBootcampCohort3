@@ -56,7 +56,7 @@ contract ProposalContract {
         require(choice >= 1 && choice <= 3, "Choice must be between 1 and 3.");
 
         Proposal storage proposal = proposals[proposal_counter];
-        
+
         if (choice == 1) {
             proposal.approve_count += 1;
         } else if (choice == 2) {
@@ -65,7 +65,7 @@ contract ProposalContract {
             proposal.pass_count += 1;
         }
         voted_addresses.push(msg.sender);
-        
+
         proposal.current_state = calculateProposalCurrentState();
 
         uint256 total_vote_count = proposal.approve_count + proposal.reject_count + proposal.pass_count;
