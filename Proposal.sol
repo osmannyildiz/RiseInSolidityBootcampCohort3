@@ -76,6 +76,7 @@ contract ProposalContract {
 
     function teminateProposal() external onlyOwner requireCurrentProposalIsActive {
         proposals[proposal_counter].is_active = false;
+        voted_addresses = [owner];
     }
 
     function getProposal(uint256 number) external view returns (Proposal memory) {
