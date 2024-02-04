@@ -28,9 +28,8 @@ contract ProposalContract {
         _;
     }
 
-    // TODO
     modifier requireHasNotVotedBefore(address _address) {
-        // require(!hasVoted(_address), "Address has already voted.");
+        require(!hasVoted(_address), "Address has already voted.");
         _;
     }
 
@@ -73,6 +72,27 @@ contract ProposalContract {
             proposal.is_active = false;
             voted_addresses = [owner];
         }
+    }
+
+    function teminateProposal() external onlyOwner requireCurrentProposalIsActive {
+        proposals[proposal_counter].is_active = false;
+    }
+
+    function getProposal(uint256 number) external view returns (Proposal memory) {
+        return proposals[number];
+    }
+
+    function getCurrentProposal() external view returns (Proposal memory) {
+        return proposals[proposal_counter];
+    }
+
+    function hasVoted(address _address) public view returns (bool) {
+        for (uint256 i = 0; i < voted_addresses.length; i++) {
+            if (voted_addresses[i] == _address) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*
