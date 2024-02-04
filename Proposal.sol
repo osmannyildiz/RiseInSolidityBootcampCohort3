@@ -23,6 +23,11 @@ contract ProposalContract {
         _;
     }
 
+    modifier notOwner() {
+        require(msg.sender != owner, "This function cannot be executed by the owner.");
+        _;
+    }
+
     modifier requireCurrentProposalIsActive() {
         require(proposals[proposal_counter].is_active, "The current proposal is not active.");
         _;
@@ -35,7 +40,6 @@ contract ProposalContract {
 
     constructor() {
         owner = msg.sender;
-        voted_addresses.push(msg.sender);
     }
 
     function setOwner(address new_owner) external onlyOwner {
@@ -51,7 +55,7 @@ contract ProposalContract {
         proposals[proposal_counter] = Proposal(_title, _description, 0, 0, 0, _total_vote_count_to_end, false, true);
     }
 
-    function voteOnCurrentProposal(uint8 choice) external requireCurrentProposalIsActive requireHasNotVotedBefore(msg.sender) {
+    function voteOnCurrentProposal(uint8 choice) external notOwner requireCurrentProposalIsActive requireHasNotVotedBefore(msg.sender) {
         require(choice >= 1 && choice <= 3, "Choice must be between 1 and 3.");
 
         Proposal storage proposal = proposals[proposal_counter];
@@ -70,13 +74,13 @@ contract ProposalContract {
         uint256 total_vote_count = proposal.approve_count + proposal.reject_count + proposal.pass_count;
         if (total_vote_count == proposal.total_vote_count_to_end) {
             proposal.is_active = false;
-            voted_addresses = [owner];
+            delete voted_addresses;
         }
     }
 
     function teminateProposal() external onlyOwner requireCurrentProposalIsActive {
         proposals[proposal_counter].is_active = false;
-        voted_addresses = [owner];
+        delete voted_addresses;
     }
 
     function getProposal(uint256 number) external view returns (Proposal memory) {
