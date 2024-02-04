@@ -3,7 +3,7 @@ pragma solidity ^0.8.18;
 
 contract Example {
     struct Counter {
-        uint number;
+        uint256 number;
         string description;
     }
 
@@ -16,7 +16,7 @@ contract Example {
         _;
     }
 
-    constructor(uint initial_value, string memory description) {
+    constructor(uint256 initial_value, string memory description) {
         owner = msg.sender;
         counter = Counter(initial_value, description);
     }
@@ -29,7 +29,7 @@ contract Example {
         counter.number -= 1;
     }
 
-    function get_counter_value() external view returns (uint) {
+    function get_counter_value() external view returns (uint256) {
         return counter.number;
     }
 
