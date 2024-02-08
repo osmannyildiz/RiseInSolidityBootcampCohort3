@@ -78,7 +78,7 @@ contract ProposalContract {
         }
     }
 
-    function teminateProposal() external onlyOwner requireCurrentProposalIsActive {
+    function terminateProposal() external onlyOwner requireCurrentProposalIsActive {
         proposals[proposal_counter].is_active = false;
         delete voted_addresses;
     }
